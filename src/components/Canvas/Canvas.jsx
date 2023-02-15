@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './index.css'
+import Modal from '../Modal/Modal'
 
 function Canvas ({ width, height }) {
   const [posX, setPosX] = useState(640)
   const [posY, setPosY] = useState(360)
   const [isClicked, setIsClicked] = useState(false)
+  const [isGameOver, setIsGameOver] = useState(null)
 
   useEffect(() => {
     const canvas = document.getElementById('MyCanvas')
@@ -38,6 +40,7 @@ function Canvas ({ width, height }) {
       setPosY(newPosY)
     } else if (isClicked) {
       resetGame()
+      setIsGameOver(true)
     }
   }
 
@@ -50,6 +53,7 @@ function Canvas ({ width, height }) {
       setPosX(640)
       setPosY(360)
     }
+    setIsGameOver(null)
   }
 
   function drawCircle (ctx, x, y) {
@@ -67,6 +71,10 @@ function Canvas ({ width, height }) {
         height={height}
       />
       <button className='reset-btn' onClick={resetGame}>Reset game</button>
+
+      <div>
+        <Modal resetGame={resetGame} isGameOver={isGameOver} />
+      </div>
     </main>
   )
 }
