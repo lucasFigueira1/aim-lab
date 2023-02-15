@@ -1,0 +1,25 @@
+canvas {
+    border: 2px solid white;
+    cursor: crosshair;
+}
+.wall-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.reset-btn {
+    background-color: #222;
+    border: 2px solid #fff;
+    color: #fff;
+    width: 200px;
+    padding: 12px 22px;
+    margin: auto;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.reset-btn:hover {
+    background-color: #cccccc32;
+    transition: .3s;
+}
