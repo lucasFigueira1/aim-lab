@@ -26,3 +26,13 @@ canvas {
 .score-text {
     margin:0;
 }
+.score-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.win-conditional-text {
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 600;
+}

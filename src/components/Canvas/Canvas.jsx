@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './index.css'
 import LoserModal from '../LoserModal/LoserModal'
 import WinModal from '../WinModal/WinModal'
+import confetti from 'canvas-confetti'
 
 function Canvas ({ width, height }) {
   const [posX, setPosX] = useState(640)
@@ -62,8 +63,9 @@ function Canvas ({ width, height }) {
   }
 
   const WINNER_CONDITION = () => {
-    if (score === 10) {
+    if (score === 25) {
       setWinner(true)
+      confetti()
     }
   }
   useEffect(() => {
@@ -79,7 +81,10 @@ function Canvas ({ width, height }) {
 
   return (
     <main className='wall-container'>
-      <h2 className='score-text'>Score: {score}</h2>
+      <div className='score-container'>
+        <h2 className='score-text'>Score: {score}</h2>
+        <h2 className='win-conditional-text'>Score 25 to win</h2>
+      </div>
 
       <canvas
         id='MyCanvas'
