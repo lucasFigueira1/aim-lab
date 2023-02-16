@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import './index.css'
-import Modal from '../Modal/Modal'
+import LoserModal from '../LoserModal/LoserModal'
+import WinModal from '../WinModal/WinModal'
 
 function Canvas ({ width, height }) {
   const [posX, setPosX] = useState(640)
   const [posY, setPosY] = useState(360)
   const [isClicked, setIsClicked] = useState(false)
   const [isGameOver, setIsGameOver] = useState(null)
+  const [winner, setWinner] = useState(null)
+  const [score, setScore] = useState(0)
 
   useEffect(() => {
     const canvas = document.getElementById('MyCanvas')
@@ -38,8 +41,8 @@ function Canvas ({ width, height }) {
       ctx.clearRect(posX - 35, posY - 35, 70, 70) // Clear the clicked circle
       setPosX(newPosX)
       setPosY(newPosY)
+      setScore(score + 1)
     } else if (isClicked) {
-      resetGame()
       setIsGameOver(true)
     }
   }
@@ -52,9 +55,20 @@ function Canvas ({ width, height }) {
       setIsClicked(false)
       setPosX(640)
       setPosY(360)
+      setScore(0)
     }
     setIsGameOver(null)
+    setWinner(null)
   }
+
+  const WINNER_CONDITION = () => {
+    if (score === 10) {
+      setWinner(true)
+    }
+  }
+  useEffect(() => {
+    WINNER_CONDITION()
+  }, [score])
 
   function drawCircle (ctx, x, y) {
     ctx.beginPath()
@@ -65,6 +79,8 @@ function Canvas ({ width, height }) {
 
   return (
     <main className='wall-container'>
+      <h2 className='score-text'>Score: {score}</h2>
+
       <canvas
         id='MyCanvas'
         width={width}
@@ -73,7 +89,8 @@ function Canvas ({ width, height }) {
       <button className='reset-btn' onClick={resetGame}>Reset game</button>
 
       <div>
-        <Modal resetGame={resetGame} isGameOver={isGameOver} />
+        <LoserModal resetGame={resetGame} isGameOver={isGameOver} score={score} />
+        <WinModal resetGame={resetGame} winner={winner} score={score} />
       </div>
     </main>
   )
