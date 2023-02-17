@@ -3,6 +3,8 @@ import './index.css'
 import LoserModal from '../LoserModal/LoserModal'
 import WinModal from '../WinModal/WinModal'
 import confetti from 'canvas-confetti'
+import useSound from 'use-sound'
+import WaterDrop from '../../assets/WaterDrop.mp3'
 
 function Canvas ({ width, height }) {
   const [posX, setPosX] = useState(640)
@@ -11,6 +13,7 @@ function Canvas ({ width, height }) {
   const [isGameOver, setIsGameOver] = useState(null)
   const [winner, setWinner] = useState(null)
   const [score, setScore] = useState(0)
+  const [play] = useSound(WaterDrop)
 
   useEffect(() => {
     const canvas = document.getElementById('MyCanvas')
@@ -24,6 +27,11 @@ function Canvas ({ width, height }) {
       canvas.removeEventListener('click', handleClick)
     }
   }, [posX, posY, isClicked])
+
+  // Target clicked sound
+  function playSound () {
+    play()
+  }
 
   function handleClick (event) {
     const canvas = document.getElementById('MyCanvas')
@@ -43,6 +51,7 @@ function Canvas ({ width, height }) {
       setPosX(newPosX)
       setPosY(newPosY)
       setScore(score + 1)
+      playSound()
     } else if (isClicked) {
       setIsGameOver(true)
     }
